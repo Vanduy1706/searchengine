@@ -22,7 +22,8 @@ let textarea = document.getElementById("searchInputId");
  */
 async function fetchData() {
     try {
-        const response = await fetch("https://backend-o94t.vercel.app/website/data");
+        // const response = await fetch("https://backend-o94t.vercel.app/website/data");
+        const response = await fetch("http://localhost:3000/website/data");
         const data = await response.json();
         return data;
 
@@ -75,6 +76,9 @@ textarea.addEventListener("keydown", (event) => {
                 document.getElementById('list').style.display = 'none';
             }
             break;
+        case "Enter":
+            submit();
+            break
         default:
             return; 
     }
@@ -233,3 +237,16 @@ window.addEventListener("keydown", (event) => {
 
     event.preventDefault();
 }, true);
+
+function submit() {
+    for (let index = 0; index < res.length; index++) {
+        const element = res[index];
+        const found = searchUrl(element.url, textarea.value);
+        if(found) {
+            textarea.value = element.url;
+            if(element.name.toLowerCase() === textarea.value.toLowerCase() || element.url.toLowerCase() === textarea.value.toLowerCase()) {
+                window.location.href = element.url;
+            }
+        }
+    }
+}
