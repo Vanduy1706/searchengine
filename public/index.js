@@ -1,6 +1,7 @@
 let deleteIconCreated = false;
 let dropdownCreated = false;
 let res = [];
+let array10 = [];
 let value;
 let textarea = document.getElementById("searchInputId");
 
@@ -109,6 +110,7 @@ function searchUrl(url, value) {
 }
 
 textarea.addEventListener("input", async () => {
+    array10 = []
     /**
      * Kiểm soát trạng thái ẩn/hiện
      * Control hide/show status
@@ -162,6 +164,9 @@ textarea.addEventListener("input", async () => {
                     a.innerHTML = element.url;
                     
                     hasValue = true;
+                    array10.push(element.id)
+                } else {
+                    array10.push(element.id)
                 }
             }
         } else { // Nếu sai thì xóa những kết quả không đúng khỏi HTML | If false, remove the incorrect results from the HTML
@@ -174,6 +179,19 @@ textarea.addEventListener("input", async () => {
         }
     }
 
+    if(array10.length >= 10) {
+        for (let index = 10; index < array10.length; index++) {
+            const element = array10[index];
+            if(!element) return;
+            const div = document.getElementById("list");
+
+            if(document.getElementById(element) !== null) {
+                const alink = document.getElementById(element);
+                div.removeChild(alink);
+            }
+        }
+    }
+    
     if(textarea.value == 0) {
         const parent = document.getElementById("main");
         const child = document.getElementById("imgDeleteBtn");
